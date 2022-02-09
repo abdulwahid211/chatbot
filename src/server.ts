@@ -2,6 +2,8 @@ import * as express from "express";
 import * as socketio from "socket.io";
 import * as path from "path";
 
+var count:number = 0;
+
 const app = express();
 app.set("port", process.env.PORT || 3000);
 
@@ -20,7 +22,9 @@ io.on("connection", function(socket: any) {
   console.log("a user connected");
   // whenever we receive a 'message' we log it out
   socket.on("message", function(message: any) {
-    console.log(message);
+    console.log(message+count);
+    count+=1;
+    socket.emit("response"," we recived your message! "+ count);
   });
 });
 
